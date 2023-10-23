@@ -1,0 +1,46 @@
+﻿@model PersonalLibrary.Models.ViewModels.NewBookFormViewModel
+
+@{
+    ViewBag.Title = "New Book";
+}
+
+<div>
+    @{
+        using (Html.BeginForm("Create", "Books", FormMethod.Post, new { @class = "form-control" }))
+        {
+            <div>
+                @Html.LabelFor(m => m.Book.Title)
+                @Html.TextBoxFor(m => m.Book.Title)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Book.Author)
+                @Html.TextBoxFor(m => m.Book.Author)
+            </div>
+            <div>
+                @Html.LabelFor(m => m.Book.PublicationYear)
+                @Html.TextBoxFor(m => m.Book.PublicationYear)
+            </div>
+            <div>
+
+                @{
+
+                    //This works, even though they are both technically the same as an enhanced for loop 
+                    for (int i = 0; i < Model.GenreTypes.Count; i++)
+                    {
+                        @Html.Label(Model.GenreTypes[i].GenreName)
+                        @Html.CheckBoxFor(m => Model.GenreTypes[i].IsSelected)
+                        //Bind the elements in this index to the model to be use by the controller 
+                        @Html.HiddenFor(m => Model.GenreTypes[i].GenreId)
+                        @Html.HiddenFor(m => Model.GenreTypes[i].GenreName)
+                    }
+
+                }
+
+            </div>
+
+            <button type="submit">Submit</button>
+                    }
+
+        <!--Within the form add the checkboxed to be added and load them in the genredId as int, check if the form has the values added to them -->
+    }
+</div>

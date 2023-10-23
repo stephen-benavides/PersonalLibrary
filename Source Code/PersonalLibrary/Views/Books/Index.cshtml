@@ -1,0 +1,36 @@
+﻿@model IEnumerable<PersonalLibrary.Models.Book>
+
+@{
+    ViewBag.Title = "My Books";
+}
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.Author)</th>
+            <th scope="col">@Html.DisplayNameFor(m => m.PublicationYear)</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        
+    @{
+        Html.SetValidationMessageElement("Are You Sure?");
+        int sequence = 1;
+
+        foreach (var book in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => sequence)</td>
+                <td>@Html.ActionLink(book.Title, "Details", "Books", new {bookId = book.BookId}, new{@class = "active"})</td>
+                <td>@Html.DisplayFor(m => book.Author)</td>
+                <td>@Html.DisplayFor(m => book.PublicationYear)</td>
+            </tr>
+            ++sequence;
+        }
+    }
+
+    </tbody>
+</table>
