@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using PersonalLibrary.Data.Repositories;
 using PersonalLibrary.Models;
 using PersonalLibrary.Models.ViewModels;
@@ -52,13 +53,17 @@ namespace PersonalLibrary.Controllers
         // POST: Book/Create
         //Populated from the New Action in the Book Controller 
         [HttpPost]
-        public ActionResult Create(NewBookFormViewModel newBookFormView)
+        public ActionResult Save(NewBookFormViewModel newBookFormView)
         {
             /*
             //Selecting both the GenreId and GenreName for testing purposes, can only be done by using an anonymous object which passes through reflection 
             var selectedGenres = newBookFormView.GenreTypes.Where(s => s.IsSelected)
                 .Select(genreItem => new {GenreId = genreItem.GenreId, GenreName = genreItem.GenreName}).ToList();
             */
+            //If the model state is invalid based on the attributes set on the model, then this return the same view again with the same values that were passed. This will trigger the Html.Validation Messages For to indicate the user the issues with the model
+            if (!ModelState.IsValid)
+                return View("New", newBookFormView);
+
 
             var selectedGenres = newBookFormView.GenreTypes.Where(s => s.IsSelected)
                 .Select(genreItem => genreItem.GenreId).ToList();
@@ -67,6 +72,7 @@ namespace PersonalLibrary.Controllers
                 BookId = newBookFormView.Book.BookId, 
                 Title = newBookFormView.Book.Title,
                 Author = newBookFormView.Book.Author,
+                PublicationYear = newBookFormView.Book.PublicationYear,
                 GenresId = selectedGenres
             };
             
@@ -74,9 +80,13 @@ namespace PersonalLibrary.Controllers
         }
 
         // GET: Book/Edit/5
-        public ActionResult Edit(int id)
+        
+        [HttpGet]
+        [Route("api2/edit")]
+        public IEnumerable<string> Edit(int id)
         {
-            return View();
+            //return View();
+            return new List<string>() {"a,b,c,d", "1,2,3,4"};
         }
 
         // POST: Book/Edit/5
