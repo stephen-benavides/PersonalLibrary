@@ -11,11 +11,13 @@ namespace PersonalLibrary.Models
     public class Book
     {
         public int BookId { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Author { get; set; }
 
         private int? _publicationYear;
         [Display(Name = "Year Of Publication")]
+        [IntegerValidator(ExcludeRange = false, MaxValue = Int32.MaxValue, MinValue = Int32.MinValue)]
         public int? PublicationYear
         {
             get => _publicationYear;

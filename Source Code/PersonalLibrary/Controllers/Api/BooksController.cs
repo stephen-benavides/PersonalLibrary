@@ -59,7 +59,7 @@ namespace PersonalLibrary.Controllers.Api
         //PUT :api/Books
         [HttpPut]
         [Route("api/books/{id}")]
-        //This URL IS INVOKED as FOLLOWS: http://localhost:62689/api/books/Put?bookId=13 and the actual book in the body of the request
+        //This URL IS INVOKED as FOLLOWS: http://localhost:62689/api/books/Put?bookId=13 and the actual book in the body of the JSON request
         public IHttpActionResult Put(int bookId, [FromBody] Book book)
         {
             var getBook = services.GetBookById(bookId);
