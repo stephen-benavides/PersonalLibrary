@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using NUnit.Framework;
 using PersonalLibrary.Data.Repositories;
 using PersonalLibrary.Models;
@@ -28,16 +29,17 @@ namespace PersonalLibrary.Tests.Data.Repositories
 
         }
 
+        //[NUnit.Framework.Ignore("DEBUG: Ignoring to avoid modifying DB")]
         [Test]
-        [NUnit.Framework.Ignore("DEBUG: Ignoring to avoid modifying DB")]
-        public void AddGenresToBook_AddDataIntothe_BookAndGenre_Table()
+        [Order(1)]
+        public void AddGenresToBook_AddDataIntoThe_BookAndGenre_Table()
         {
             BookRepository bookRepository = new BookRepository();
 
             string jsonFile = File.ReadAllText(@"D:\Users\Roshack\Desktop\PublicProjects\PersonalLibrary\Source Code\PersonalLibrary.Tests\Content\Client\BookIdGenreIdInsertionJSON.txt");
 
             //Desirialize the json string into a Dyamic JSON Object that exists at run time
-            //var desirializedJson = JsonConvert.DeserializeObject(jsonFile);
+            var desirializedJson = JsonConvert.DeserializeObject(jsonFile);
 
             int rowsAffected = bookRepository.AddGenresToBook(jsonFile);
 

@@ -16,8 +16,8 @@ namespace PersonalLibrary.Models
         public string Author { get; set; }
 
         private int? _publicationYear;
-        [Display(Name = "Year Of Publication")]
-        [IntegerValidator(ExcludeRange = false, MaxValue = Int32.MaxValue, MinValue = Int32.MinValue)]
+        [Display(Name = ClsConstants.Year_Of_Publication)]
+        [Range(0, 9999, ErrorMessage = "Not a valid year")]
         public int? PublicationYear
         {
             get => _publicationYear;

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace PersonalLibrary
 {
@@ -9,6 +11,16 @@ namespace PersonalLibrary
     {
         public static void Register(HttpConfiguration config)
         {
+            #region JsonCamelCasing configuration setup
+
+            //Updating configuration to return camel notation json 
+            var settings = config.Formatters.JsonFormatter.SerializerSettings;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            settings.Formatting = Formatting.Indented;
+
+            #endregion
+
+
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

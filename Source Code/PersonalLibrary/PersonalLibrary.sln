@@ -11,16 +11,21 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Testing|Any CPU = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{00D13281-2A00-4649-9DEB-35E49BD6377F}.Testing|Any CPU.Build.0 = Testing|Any CPU
 		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Testing|Any CPU.ActiveCfg = Testing|Any CPU
+		{95C3944C-DA9B-46EE-ACC7-79CC13D809B0}.Testing|Any CPU.Build.0 = Testing|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

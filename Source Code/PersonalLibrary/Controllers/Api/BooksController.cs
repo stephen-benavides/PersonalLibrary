@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web;
-using System.Web.Http;
-using PersonalLibrary.Data.Repositories;
+﻿using PersonalLibrary.Data.Repositories;
 using PersonalLibrary.Models;
 using PersonalLibrary.Services;
+using System.Linq;
+using System.Web.Http;
 
 namespace PersonalLibrary.Controllers.Api
 {
@@ -32,7 +26,10 @@ namespace PersonalLibrary.Controllers.Api
         [HttpGet]
         public IHttpActionResult GetAllBooks()
         {
-            return Ok(services.GetAllBooks());
+            var allBooks = services.GetAllBooks();
+            //var selectedBooks =
+            allBooks.Where(b => b.BookId > 10).Select(b => new { BookId = b.BookId, Title = b.Title });
+            return Ok(allBooks);
         }
 
         // GET: api/Books/5
@@ -50,11 +47,12 @@ namespace PersonalLibrary.Controllers.Api
 
         // POST: api/Books
         [HttpPost]
-        [Route("api/books/{id}")]
-        public IHttpActionResult Post([FromBody]Book book)
+        [Route("api/books")]
+        public IHttpActionResult Post([FromBody] Book book)
         {
-            services.AddNewBook(book);
-            return Ok("New book has been added");
+            //services.AddNewBook(book);
+            //return Ok("New book has been added");
+            return Ok(book);
         }
         //PUT :api/Books
         [HttpPut]
@@ -73,13 +71,13 @@ namespace PersonalLibrary.Controllers.Api
         // DELETE: api/Books/5
         [HttpDelete]
         [Route("api/books/{id}")]
-        public IHttpActionResult DeleteBook(int id)
+        public IHttpActionResult Delete(int id)
         {
             var bookToDelete = services.GetBookById(id);
             if (bookToDelete == null)
                 return NotFound();
-            services.DeleteBook(id);
-            return Ok(Request.RequestUri+"///BOOK DELETED");
+            //services.DeleteBook(id);
+            return Ok(Request.RequestUri + "///BOOK DELETED");
         }
     }
 }

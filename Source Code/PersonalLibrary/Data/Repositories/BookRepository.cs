@@ -64,7 +64,7 @@ namespace PersonalLibrary.Data.Repositories
         public void Add(Book book)
         {
             //Command
-            string stepsp_common_AddNewBook = "stepsp_common_AddNewBook";
+            string stepsp_common_AddNewBook = ClsConstants.stepsp_common_AddNewBook;
 
             var parameters = new Hashtable();
             parameters.Add("@Title", book.Title);
@@ -99,7 +99,7 @@ namespace PersonalLibrary.Data.Repositories
         {
             var updatedBook = new Book();
 
-            string stepsp_common_UpdateExistingBook = "stepsp_common_UpdateExistingBook";
+            string stepsp_common_UpdateExistingBook = ClsConstants.stepsp_common_UpdateExistingBook;
             Hashtable parameters = new Hashtable();
             parameters.Add("@BookId", book.BookId);
             parameters.Add("@Title", book.Title);
@@ -221,7 +221,7 @@ namespace PersonalLibrary.Data.Repositories
             {
                 _sqlServerHelper.OpenConnection();
 
-                string storedProc = "stepsp_common_InsertBookGenre";
+                string storedProc = ClsConstants.stepsp_common_InsertBookGenre;
                 string parameterKey = "@BookGenreList";
 
                 // BookId: 2 , List<GenreIds>: 1,2,3,4,5
@@ -252,7 +252,7 @@ namespace PersonalLibrary.Data.Repositories
 
         public int AddGenresToBook(string json)
         {
-            string storedProc = "stepsp_common_InsertBookGenre";
+            string storedProc = ClsConstants.stepsp_common_InsertBookGenre;
             Hashtable parameters = new Hashtable();
             parameters["@jsonDataTable"] = json;
 

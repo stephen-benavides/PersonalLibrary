@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-using PersonalLibrary.Data.Repositories;
+﻿using PersonalLibrary.Data.Repositories;
 using PersonalLibrary.Models;
 using PersonalLibrary.Models.ViewModels;
 using PersonalLibrary.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace PersonalLibrary.Controllers
 {
@@ -25,11 +22,12 @@ namespace PersonalLibrary.Controllers
         }
         public ActionResult Index()
         {
-            var lstBook = services.GetAllBooks();
-            return View(lstBook);
+            /*Using Rest API, we no longert need to pass the book to the view*/
+            return View();
         }
 
         // GET: Book/Details/5
+        [Route("books/details/{bookId}")]
         public ActionResult Details(int bookId)
         {
             //Console.WriteLine(book);
@@ -47,12 +45,13 @@ namespace PersonalLibrary.Controllers
             //Passes a new objects that is going to be interacted by the view 
             NewBookFormViewModel viewModel = new NewBookFormViewModel();
             viewModel.GenreTypes = genreServices.GetAllGenres().ToList();
-            
+
             return View("New", viewModel);
         }
         // POST: Book/Create
         //Populated from the New Action in the Book Controller 
         [HttpPost]
+        [ValidateAntiForgeryToken] //Validate the AntiForgeryToken from the view to check if they match
         public ActionResult Save(NewBookFormViewModel newBookFormView)
         {
             /*
@@ -69,24 +68,25 @@ namespace PersonalLibrary.Controllers
                 .Select(genreItem => genreItem.GenreId).ToList();
             var newBook = new Book()
             {
-                BookId = newBookFormView.Book.BookId, 
+                BookId = newBookFormView.Book.BookId,
                 Title = newBookFormView.Book.Title,
                 Author = newBookFormView.Book.Author,
                 PublicationYear = newBookFormView.Book.PublicationYear,
                 GenresId = selectedGenres
             };
-            
+
             return Json(newBook, JsonRequestBehavior.AllowGet);
+            //throw new ArgumentException();
         }
 
         // GET: Book/Edit/5
-        
+
         [HttpGet]
         [Route("api2/edit")]
         public IEnumerable<string> Edit(int id)
         {
             //return View();
-            return new List<string>() {"a,b,c,d", "1,2,3,4"};
+            return new List<string>() { "a,b,c,d", "1,2,3,4" };
         }
 
         // POST: Book/Edit/5
@@ -126,5 +126,6 @@ namespace PersonalLibrary.Controllers
                 return View();
             }
         }
+
     }
 }

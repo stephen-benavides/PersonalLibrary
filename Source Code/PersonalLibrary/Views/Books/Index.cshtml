@@ -8,33 +8,112 @@
     @Html.ActionLink("Add New Book", "New", "Books", new { @class = "btn btn-outline-primary" })
 </div>
 
-<table class="table table-striped table-hover">
+<!--Setting ID - books for the table to use in the Jquery code-->
+<table id="books" class="table table-striped table-hover">
     <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
-            <th scope="col">@Html.DisplayNameFor(m => m.Author)</th>
-            <th scope="col">@Html.DisplayNameFor(m => m.PublicationYear)</th>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+        <th scope="col">@Html.DisplayNameFor(m => m.Author)</th>
+        <th scope="col">@Html.DisplayNameFor(m => m.PublicationYear)</th>
+        <th scope="col">Delete</th>
 
-        </tr>
+
+    </tr>
     </thead>
     <tbody>
-        
-    @{
-        Html.SetValidationMessageElement("Are You Sure?");
-        int sequence = 1;
-
-        foreach (var book in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(m => sequence)</td>
-                <td>@Html.ActionLink(book.Title, "Details", "Books", new {bookId = book.BookId}, new{@class = "active"})</td>
-                <td>@Html.DisplayFor(m => book.Author)</td>
-                <td>@Html.DisplayFor(m => book.PublicationYear)</td>
-            </tr>
-            ++sequence;
-        }
-    }
-
+    @*As the new request is of RestAPI, we no longer need 
+        to load the objects in the model as it is done by the script code *@
     </tbody>
 </table>
+
+@Scripts.Render("~/bundles/lib")
+
+<!--Scripts are always at the end, as we should show something to the user and the scripts do take some time-->
+@section scripts
+{
+    <script>
+
+        /*
+         * Script to retrieve all elements from RestAPI and load into the rows of the data table
+         *
+         */
+        $(document).ready(function() {
+            $("#books").DataTable({
+                ajax: {
+                    url: "/api/books",
+                    method: "GET",
+                    dataSrc: ""
+                },
+                columns:
+                [
+                        {
+                        // The first column (index 0)
+                        targets: 0,
+
+                        /*
+                         * RENDERING:
+                         * Convert the element that is being received by
+                         * the 'data' field into something else to be displayed by the application
+                         *
+                         * render the data, type of request, and the row(which we can replace with the name of the table)
+                         */
+                        render: function(data, type, row, meta) {
+                            // Return the row index + 1 as the incrementing value
+                            return meta.row + 1;
+                        }
+                    },
+                    {
+                        data: "title",
+                        //Create anchor to redirect to the Details view in the Books controller 
+                        //Html.ActionLink(book.Title, "Details", "Books", new { bookId = book.BookId }, new { class = "active" })</td>
+                        render: function (data, type, books) {
+                            //<a href = '/Books/Details/books.bookId'> Title </a>
+                            return "<a href = '/Books/Details/"+ books.bookId +"'>" + data + "</a>";
+                        }
+
+                    },
+                    {
+                        data: "author"
+
+                    },
+                    {
+                        data: "publicationYear"
+                    },
+                    {
+                        data: "bookId",
+                        // Take the value stored in book id and put it into data-book-id to use it to remove the record using the script bellow
+                        render: function(data) {
+                            return "<button class = 'btn-link js-delete' data-book-id = " + data + " > Delete </button>";
+                        }
+                    }
+                ]
+            });
+        });
+
+
+        /**
+         * Script to remove an element using Rest API
+         */
+        //The $ indicates that this is a jquery type of call
+        $(document).ready(function() {
+            //Select the books tables, when the button with .js-delete is clicked, then run another callback function
+            $("#books").on("click",
+                ".js-delete",
+                function() {
+                    var button = $(this);
+                    if (confirm("Are you sure you want to delete this customer")) {
+                        $.ajax({
+                            url: "/api/books/" + button.attr("data-book-id"),
+                            method: "DELETE",
+                            success: function() {
+                                //console.log("Success");
+                                //buble up to the row from the button and remove it
+                                button.parents("tr").remove();
+                            }
+                        });
+                    }
+                });
+        });
+    </script>
+}

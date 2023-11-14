@@ -23,7 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-/*Set Error Validation Custom Color*/
+/*Set Error Validation Custom Color for Label and Text*/
 .field-validation-error,
 label.error {
     color: red;

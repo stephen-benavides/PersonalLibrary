@@ -10,7 +10,7 @@ namespace PersonalLibrary.Data.Repositories
 {
     public class GenreRepository : IRepository<Genre>
     {
-        private SqlServerHelper _sqlServerHelper;
+        private readonly SqlServerHelper _sqlServerHelper;
         public GenreRepository()
         {
             _sqlServerHelper = new SqlServerHelper();
@@ -97,7 +97,7 @@ namespace PersonalLibrary.Data.Repositories
         /// <returns></returns>
         public int AddGenresToBook(string json)
         {
-            string storedProc = "stepsp_common_InsertBookGenre";
+            string storedProc = ClsConstants.stepsp_common_InsertBookGenre;
             Hashtable parameters = new Hashtable();
             parameters["@jsonDataTable"] = json;
 

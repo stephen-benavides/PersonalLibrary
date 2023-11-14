@@ -9,17 +9,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc.Html;
 
 namespace PersonalLibrary.Data
 {
     public class SqlServerHelper
     {
-        private SqlConnection _connection;
+        private readonly SqlConnection _connection;
         public SqlServerHelper()
         {
             //Set The connection string 
-            _connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
-
+           // _connection = new SqlConnection(ConfigurationManager.AppSettings["ConnectionString"]);
+           _connection = new SqlConnection(ConfigurationManager.ConnectionStrings[ClsConstants.DefaultConnection].ConnectionString);
         }
 
         public void OpenConnection()
@@ -80,6 +81,7 @@ namespace PersonalLibrary.Data
             return resultSet;
         }
 
+        
         public DataSet ExecuteQuery(string cmdText, Hashtable parameterList)
         {
             DataSet result = new DataSet();

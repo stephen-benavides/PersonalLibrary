@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace PersonalLibrary
@@ -11,6 +7,9 @@ namespace PersonalLibrary
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
+            //Same routing config as web api, but in the regular one you need to call it. 
+            routes.MapMvcAttributeRoutes();
+
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
